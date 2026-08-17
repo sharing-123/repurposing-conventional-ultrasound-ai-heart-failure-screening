@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LIFES on Conventional Ultrasound — Transparency Hub</title>
+<meta name="description" content="Open results, data, and reproducible analysis for adapting the LIFES echocardiographic AI model to conventional convex ultrasound for heart failure screening." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="#findings">Key Findings</a>
+  <a href="#deep-dive">Deep Dive</a>
+  <a href="#methods">Methods</a>
+  <a href="#transparency">Data &amp; Code</a>
+  <a href="https://github.com/REPLACE_WITH_ORG/REPLACE_WITH_REPO">GitHub ↗</a>
+</nav>
+
+<header class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="eyebrow">Open Science · Transparency Hub</div>
+    <div class="title-3d-wrap">
+      <div class="title-3d">LIFES &times; Conventional Ultrasound</div>
+    </div>
+    <p class="lede">
+      Adapting a validated echocardiographic AI model to the convex ultrasound systems primary
+      care already owns — full results, reproducible analysis code, and every metric behind
+      the manuscript, openly available.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">254 participants · 4 hospitals</span>
+      <span class="badge">Binary + multiclass HF classification</span>
+      <span class="badge">High-end vs. low-end platform comparison</span>
+      <span class="badge">TRIPOD+AI reporting</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#findings">See the Results</a>
+      <a class="btn btn-secondary" href="https://github.com/REPLACE_WITH_ORG/REPLACE_WITH_REPO">View Source Code</a>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll ↓</div>
+</header>
+
+<section class="content" id="findings">
+  <h2>Key Findings</h2>
+  <p class="section-sub">
+    Every number below is pulled live from <code>data/results/*.csv</code> in this repository
+    through the plotting pipeline in <code>src/</code> — nothing here is hand-drawn.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value">0.777</div><div class="label">Best binary AUROC (PLAX, high-end)</div></div>
+    <div class="stat-card"><div class="value">0.548</div><div class="label">Same view, low-end platform</div></div>
+    <div class="stat-card"><div class="value">0.759</div><div class="label">Best multiclass macro-AUROC (PLAX, high-end)</div></div>
+    <div class="stat-card"><div class="value">254</div><div class="label">Participants, 4 tertiary hospitals in Indonesia</div></div>
+  </div>
+
+  <div class="figure-grid">
+    <div class="figure-card">
+      <iframe src="assets/figures/binary_auroc.html" loading="lazy"></iframe>
+    </div>
+    <div class="figure-card">
+      <iframe src="assets/figures/multiclass_auroc.html" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="figure-card">
+    <iframe src="assets/figures/binary_platform_gap.html" loading="lazy"></iframe>
+  </div>
+
+  <p>
+    Discrimination is consistently stronger on the high-end conventional ultrasound system,
+    and the gap is largest for PLAX in binary classification. Hover over any chart for the
+    full metric breakdown per platform and view.
+  </p>
+</section>
+
+<section class="content" id="deep-dive">
+  <h2>Deep Dive</h2>
+  <p class="section-sub">
+    Beyond AUROC: sensitivity, specificity, and predictive values tell a more complete story,
+    especially where high sensitivity on the low-end device comes paired with very low specificity.
+  </p>
+
+  <div class="figure-grid">
+    <div class="figure-card">
+      <iframe src="assets/figures/plax_radar.html" loading="lazy"></iframe>
+    </div>
+    <div class="figure-card">
+      <iframe src="assets/figures/binary_heatmap.html" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="figure-card">
+    <iframe src="assets/figures/multiclass_heatmap.html" loading="lazy"></iframe>
+  </div>
+</section>
+
+<section class="content" id="methods">
+  <h2>Methodology, in Brief</h2>
+  <p class="section-sub">
+    Full methodology is reported in the manuscript under TRIPOD+AI. Summary below.
+  </p>
+  <div class="transparency-box">
+    <h3>Study design</h3>
+    <ul>
+      <li>Multicenter model-adaptation study, four tertiary hospitals in Indonesia.</li>
+      <li>LIFES echocardiographic AI model adapted to conventional convex ultrasound via transfer learning.</li>
+      <li>Two platforms compared: GE LOGIQ S7 (high-end) and Mindray DP-20 (low-end).</li>
+      <li>Views evaluated: PLAX, A4C, A2C <span class="note-flag">PSAX acquired but excluded from the final analysis — see manuscript Methods</span>.</li>
+      <li>Patient-level split: 70% training / 15% validation / 15% testing.</li>
+    </ul>
+  </div>
+  <div class="pill-row">
+    <span class="pill">Binary HF detection</span>
+    <span class="pill">Normal / HFpEF / HFrEF multiclass</span>
+    <span class="pill">Patient-level data split</span>
+    <span class="pill">Independent test-set evaluation</span>
+  </div>
+</section>
+
+<section class="content" id="transparency">
+  <h2>Data &amp; Code Transparency</h2>
+  <div class="transparency-box">
+    <h3>What is openly available here</h3>
+    <ul>
+      <li>All performance metrics reported in the manuscript (Tables 2–3), as raw CSV.</li>
+      <li>The complete plotting pipeline (<code>src/</code>) that produces every chart on this page, directly from those CSVs.</li>
+      <li>The rendered, interactive figures themselves (open any file in <code>docs/assets/figures/</code>).</li>
+    </ul>
+    <h3>What is intentionally not included</h3>
+    <ul>
+      <li>Patient-level imaging data and identifiable clinical records, withheld to protect participant privacy per the study's ethics approval.</li>
+      <li>Baseline characteristics (Table 1) and STARD flow-diagram counts <span class="note-flag">pending finalization — placeholders in this repo, not real values</span>.</li>
+      <li>The LIFES model weights and training pipeline, which remain the authors' ongoing research property.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Companion repository for the manuscript <em>“Repurposing Conventional Primary Care Ultrasound for
+  Artificial Intelligence-Assisted Heart Failure Screening.”</em></p>
+  <p>Code licensed under MIT · Site content licensed under CC BY 4.0 · <a href="https://github.com/REPLACE_WITH_ORG/REPLACE_WITH_REPO">Source on GitHub</a></p>
+</footer>
+
+<script type="module" src="assets/js/banner.js"></script>
+</body>
+</html>
