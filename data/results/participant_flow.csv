@@ -1,0 +1,14 @@
+stage,n,note
+screened,383,Adult patients screened for eligibility across 4 hospitals
+excluded_poor_acoustic_window,51,
+excluded_persistent_arrhythmia,32,
+excluded_prior_cardiac_surgery_artefact,18,
+excluded_incomplete_imaging_data,16,
+excluded_inadequate_lv_visualization,12,found on quality review
+enrolled,254,"104 non-HF controls, 150 established heart failure"
+non_hf,104,
+hfpef,76,
+hfref,74,
+training_set,178,70% patient-level split
+validation_set,38,15% patient-level split
+testing_set,38,"15% patient-level split, used for reported performance"

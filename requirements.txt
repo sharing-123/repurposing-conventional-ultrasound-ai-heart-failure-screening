@@ -1,2 +1,9 @@
+# src/ (site-generation pipeline: CSV -> interactive figures)
 pandas>=2.2
 plotly>=5.24
+
+# analysis/ (raw dataset -> CSV; only needed if reproducing from the private
+# raw file, see analysis/README.md)
+numpy>=1.26
+scipy>=1.13
+openpyxl>=3.1

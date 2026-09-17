@@ -68,15 +68,33 @@
     </div>
   </div>
 
-  <div class="figure-card">
-    <iframe src="assets/figures/binary_platform_gap.html" loading="lazy"></iframe>
+  <div class="figure-grid">
+    <div class="figure-card">
+      <iframe src="assets/figures/binary_platform_gap.html" loading="lazy"></iframe>
+    </div>
+    <div class="figure-card">
+      <iframe src="assets/figures/platform_significance.html" loading="lazy"></iframe>
+    </div>
   </div>
 
   <p>
-    Discrimination is consistently stronger on the high-end conventional ultrasound system,
-    and the gap is largest for PLAX in binary classification. Hover over any chart for the
+    Error bars on the binary AUROC chart are 95% confidence intervals (DeLong method). The
+    platform gap is largest for PLAX in binary classification, and an unpaired DeLong test
+    confirms that gap is statistically significant (P &lt; 0.001). The same test finds no
+    significant platform difference for A4C (P = 0.439) or A2C (P = 0.864), so the advantage
+    of the high-end system concentrates in the view that already carries the strongest
+    diagnostic signal rather than applying evenly everywhere. Hover over any chart for the
     full metric breakdown per platform and view.
   </p>
+
+  <div class="figure-grid">
+    <div class="figure-card">
+      <iframe src="assets/figures/participant_flow.html" loading="lazy"></iframe>
+    </div>
+    <div class="figure-card">
+      <iframe src="assets/figures/baseline_table.html" loading="lazy"></iframe>
+    </div>
+  </div>
 </section>
 
 <section class="content" id="deep-dive">
@@ -127,14 +145,16 @@
   <div class="transparency-box">
     <h3>What is openly available here</h3>
     <ul>
-      <li>All performance metrics reported in the manuscript (Tables 2–3), as raw CSV.</li>
-      <li>The complete plotting pipeline (<code>src/</code>) that produces every chart on this page, directly from those CSVs.</li>
+      <li>All performance metrics reported in the manuscript (Tables 2–3), as raw CSV, including 95% confidence intervals (DeLong for binary AUROC, bootstrap for multiclass accuracy).</li>
+      <li>Baseline demographic and clinical characteristics (Table 1), independently recomputed from patient-level data with the statistical test named for every row.</li>
+      <li>The STARD-style participant flow counts (screened, excluded by reason, enrolled, and split into training/validation/testing).</li>
+      <li>The unpaired DeLong significance test comparing high-end versus low-end AUROC for every cardiac view.</li>
+      <li>The complete plotting pipeline (<code>src/</code>) that produces every chart on this page, directly from those CSVs, plus the <code>analysis/</code> folder documenting the statistical methods (DeLong variance estimator, bootstrap routines) used to derive them from the underlying video-level predictions.</li>
       <li>The rendered, interactive figures themselves (open any file in <code>docs/assets/figures/</code>).</li>
     </ul>
     <h3>What is intentionally not included</h3>
     <ul>
-      <li>Patient-level imaging data and identifiable clinical records, withheld to protect participant privacy per the study's ethics approval.</li>
-      <li>Baseline characteristics (Table 1) and STARD flow-diagram counts <span class="note-flag">pending finalization — placeholders in this repo, not real values</span>.</li>
+      <li>Patient-level imaging data and identifiable clinical records, withheld to protect participant privacy per the study's ethics approval. This includes the video-level AI prediction scores that the aggregate tables above were computed from.</li>
       <li>The LIFES model weights and training pipeline, which remain the authors' ongoing research property.</li>
     </ul>
   </div>

@@ -1,0 +1,4 @@
+view,auroc_high_end,auroc_low_end,difference,z_statistic,p_value,significant_at_0.05
+PLAX,0.7773,0.548,0.2293,3.465,0.0005299600592421072,True
+A4C,0.662,0.604,0.058,0.773,0.43943541238410333,False
+A2C,0.5769,0.563,0.0138,0.171,0.8639963928352823,False

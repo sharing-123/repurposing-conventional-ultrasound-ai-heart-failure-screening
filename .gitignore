@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# private, patient-linked source data — never commit
+data/raw/*.xlsx
+data/raw/*.csv
+!data/raw/README.md
