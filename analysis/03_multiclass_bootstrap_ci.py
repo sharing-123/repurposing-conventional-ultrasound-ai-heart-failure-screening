@@ -3,12 +3,14 @@ Recompute multiclass (Normal / HFpEF / HFrEF) performance from the raw
 video-level predictions, with a 95% bootstrap confidence interval for overall
 accuracy. Writes data/results/multiclass_classification_results.csv.
 
-Macro-AUROC is derived from the hard predicted class the standard way for a
-non-probabilistic one-vs-rest classifier: AUC_c = (sensitivity_c + specificity_c) / 2,
-then macro-averaged. A CI is not reported for macro-AUROC itself because the
-shared prediction data retain only the discrete predicted class, not the
-per-class probability scores the published macro-AUROC point estimate used;
-see analysis/README.md.
+The shared prediction data retain only the discrete predicted class, not
+per-class probability scores, so macro-AUROC cannot be computed from them.
+The file reports macro-averaged balanced accuracy instead: for each class
+c, (sensitivity_c + specificity_c) / 2 in a one-vs-rest comparison, averaged
+over the three classes. Sensitivity, specificity, PPV, NPV, F1-score and the
+likelihood ratios are likewise macro-averages of the one-vs-rest values.
+No CI is reported for balanced accuracy; the bootstrap CI applies to overall
+accuracy (2000 resamples of cine loops). See analysis/README.md.
 """
 import csv
 from pathlib import Path
@@ -37,11 +39,13 @@ def multiclass_metrics(y_true, y_pred):
         ppv = tp / (tp + fp) if (tp + fp) else 0.0
         npv = tn / (tn + fn) if (tn + fn) else 0.0
         f1 = 2 * ppv * sens / (ppv + sens) if (ppv + sens) else 0.0
+        lr_pos = sens / (1 - spec) if spec < 1 else float("nan")
+        lr_neg = (1 - sens) / spec if spec > 0 else float("nan")
         per_class[c] = dict(sensitivity=sens, specificity=spec, ppv=ppv, npv=npv, f1=f1,
-                             auc=(sens + spec) / 2)
+                             lr_pos=lr_pos, lr_neg=lr_neg, auc=(sens + spec) / 2)
     acc = sum(1 for t, p in zip(y_true, y_pred) if t == p) / n
     macro = {k: float(np.mean([per_class[c][k] for c in CLASSES]))
-              for k in ["sensitivity", "specificity", "ppv", "npv", "f1", "auc"]}
+              for k in ["sensitivity", "specificity", "ppv", "npv", "f1", "lr_pos", "lr_neg", "auc"]}
     macro["accuracy"] = acc
     return macro
 
@@ -75,7 +79,8 @@ for platform in ["High-end", "Low-end"]:
         out_rows.append([
             platform, view, len(sub), round(100 * macro["accuracy"], 2), round(100 * macro["ppv"], 2),
             round(100 * macro["sensitivity"], 2), round(100 * macro["f1"], 2),
-            round(100 * macro["specificity"], 2), round(100 * macro["npv"], 2), round(macro["auc"], 4),
+            round(100 * macro["specificity"], 2), round(100 * macro["npv"], 2),
+            f"{macro['lr_pos']:.2f}", f"{macro['lr_neg']:.2f}", f"{macro['auc']:.3f}",
             round(100 * lo, 2), round(100 * hi, 2),
         ])
 
@@ -83,7 +88,8 @@ OUT.parent.mkdir(parents=True, exist_ok=True)
 with open(OUT, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     w.writerow(["platform", "view", "n", "accuracy", "ppv", "sensitivity", "f1", "specificity",
-                "npv", "macro_auroc", "accuracy_ci_low", "accuracy_ci_high"])
+                "npv", "lr_positive", "lr_negative", "macro_balanced_accuracy",
+                "accuracy_ci_low", "accuracy_ci_high"])
     w.writerows(out_rows)
 
 print("Wrote", OUT)
