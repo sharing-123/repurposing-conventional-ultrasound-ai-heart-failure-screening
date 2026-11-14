@@ -29,7 +29,7 @@ def run() -> None:
         "binary_auroc.html",
     )
     write_fragment(
-        auroc_bar(multiclass_df, "macro_auroc", "Multiclass phenotyping: macro-AUROC by platform and view", "Macro-AUROC"),
+        auroc_bar(multiclass_df, "macro_balanced_accuracy", "Multiclass phenotyping: macro balanced accuracy by platform and view", "Macro balanced accuracy"),
         "multiclass_auroc.html",
     )
     write_fragment(

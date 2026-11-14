@@ -1,9 +1,10 @@
 """
-Test whether the AUROC gap between the high-end and low-end platforms is
-statistically significant for each cardiac view (binary classification),
-using an unpaired two-sample DeLong test. High-end and low-end test sets are
-independent samples of cine loops (different N per platform), so this is not
-a paired test. Writes data/results/platform_comparison_test.csv.
+Exploratory comparison of the AUROC gap between the high-end and low-end
+platforms for each cardiac view (binary classification), using an unpaired
+two-sample DeLong test. The test treats cine loops as independent samples
+(different N per platform) and does not account for repeated loops from the
+same participant, so the P values are descriptive. Writes
+data/results/platform_comparison_test.csv.
 """
 import csv
 from pathlib import Path

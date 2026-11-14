@@ -121,14 +121,14 @@ def platform_significance_bar(df: pd.DataFrame) -> go.Figure:
     ))
     fig.update_layout(
         template=TEMPLATE,
-        title="Is the platform gap real? Unpaired DeLong test per view",
+        title="Platform gap per view: exploratory unpaired DeLong test",
         yaxis=dict(title="AUROC difference (high-end − low-end)"),
         xaxis=dict(title="Cardiac view"),
         font=LAYOUT_FONT,
         height=380,
         margin=dict(t=70, b=50, l=60, r=30),
         annotations=[dict(
-            text="green = P < 0.05 (statistically significant)   gray = not significant",
+            text="green = P < 0.05   gray = P ≥ 0.05   (exploratory, cine loops treated as independent)",
             xref="paper", yref="paper", x=0, y=1.12, showarrow=False,
             font=dict(size=12, color="#6b7280"),
         )],

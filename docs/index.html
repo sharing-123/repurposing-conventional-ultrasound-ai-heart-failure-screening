@@ -27,7 +27,7 @@
       <div class="title-3d">LIFES &times; Conventional Ultrasound</div>
     </div>
     <p class="lede">
-      Adapting a validated echocardiographic AI model to the convex ultrasound systems primary
+      Adapting a previously developed echocardiographic AI model to the convex ultrasound systems primary
       care already owns — full results, reproducible analysis code, and every metric behind
       the manuscript, openly available.
     </p>
@@ -55,7 +55,7 @@
   <div class="stat-grid">
     <div class="stat-card"><div class="value">0.777</div><div class="label">Best binary AUROC (PLAX, high-end)</div></div>
     <div class="stat-card"><div class="value">0.548</div><div class="label">Same view, low-end platform</div></div>
-    <div class="stat-card"><div class="value">0.759</div><div class="label">Best multiclass macro-AUROC (PLAX, high-end)</div></div>
+    <div class="stat-card"><div class="value">0.687</div><div class="label">Best multiclass macro balanced accuracy (PLAX, high-end)</div></div>
     <div class="stat-card"><div class="value">254</div><div class="label">Participants, 4 tertiary hospitals in Indonesia</div></div>
   </div>
 
@@ -79,11 +79,11 @@
 
   <p>
     Error bars on the binary AUROC chart are 95% confidence intervals (DeLong method). The
-    platform gap is largest for PLAX in binary classification, and an unpaired DeLong test
-    confirms that gap is statistically significant (P &lt; 0.001). The same test finds no
-    significant platform difference for A4C (P = 0.439) or A2C (P = 0.864), so the advantage
-    of the high-end system concentrates in the view that already carries the strongest
-    diagnostic signal rather than applying evenly everywhere. Hover over any chart for the
+    platform gap is largest for PLAX in binary classification. An exploratory unpaired DeLong
+    test gave P &lt; 0.001 for PLAX, P = 0.439 for A4C, and P = 0.864 for A2C. The test treats
+    cine loops as independent and does not account for repeated loops from the same
+    participant, so these P values should be read as descriptive. The multiclass chart shows
+    macro balanced accuracy, because the shared predictions contain only the predicted class. Hover over any chart for the
     full metric breakdown per platform and view.
   </p>
 
@@ -148,7 +148,7 @@
       <li>All performance metrics reported in the manuscript (Tables 2–3), as raw CSV, including 95% confidence intervals (DeLong for binary AUROC, bootstrap for multiclass accuracy).</li>
       <li>Baseline demographic and clinical characteristics (Table 1), independently recomputed from patient-level data with the statistical test named for every row.</li>
       <li>The STARD-style participant flow counts (screened, excluded by reason, enrolled, and split into training/validation/testing).</li>
-      <li>The unpaired DeLong significance test comparing high-end versus low-end AUROC for every cardiac view.</li>
+      <li>The exploratory unpaired DeLong test comparing high-end versus low-end AUROC for every cardiac view.</li>
       <li>The complete plotting pipeline (<code>src/</code>) that produces every chart on this page, directly from those CSVs, plus the <code>analysis/</code> folder documenting the statistical methods (DeLong variance estimator, bootstrap routines) used to derive them from the underlying video-level predictions.</li>
       <li>The rendered, interactive figures themselves (open any file in <code>docs/assets/figures/</code>).</li>
     </ul>
