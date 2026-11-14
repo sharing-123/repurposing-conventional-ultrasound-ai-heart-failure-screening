@@ -21,7 +21,7 @@ method without exposing anyone in the cohort.
 |---|---|---|---|
 | `01_table1_baseline.py` | `Patient_Data` | `data/results/baseline_characteristics.csv` | Welch's two-sample t-test for continuous variables; Pearson chi-square (Fisher exact when any expected cell count < 5) for categorical variables |
 | `02_delong_auc_ci.py` | `AI_Predictions_Binary` | `data/results/binary_classification_results.csv` | DeLong (1988) nonparametric AUC variance estimator for the 95% CI, cross-checked against a stratified bootstrap (2000 resamples) |
-| `03_multiclass_bootstrap_ci.py` | `AI_Predictions_Multiclass` | `data/results/multiclass_classification_results.csv` | One-vs-rest hard-classifier metrics per class, macro-averaged; 95% bootstrap CI (2000 patient-level resamples) for overall accuracy |
+| `03_multiclass_bootstrap_ci.py` | `AI_Predictions_Multiclass` | `data/results/multiclass_classification_results.csv` | One-vs-rest metrics per class on the predicted class (sensitivity, specificity, PPV, NPV, F1-score, likelihood ratios, balanced accuracy), macro-averaged; 95% bootstrap CI (2000 cine-loop resamples) for overall accuracy |
 | `04_platform_comparison_test.py` | `AI_Predictions_Binary` | `data/results/platform_comparison_test.csv` | Unpaired two-sample DeLong test (`z = (AUC_high - AUC_low) / sqrt(var_high + var_low)`) comparing the high-end and low-end platforms per view |
 
 ## Running it
